@@ -9,8 +9,8 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 DATA_DIR="$HOME/.lunariumcoin"
 BLOCKS_DIR="$DATA_DIR/blocks"
-BOOTSTRAP_URL="https://bootstrap.lunariumcoin.com/blockchain"
-TMP_ZIP="$(mktemp -t lunariumcoin-bootstrap.XXXXXX.zip)"
+BOOTSTRAP_URL="https://mundolunariumcoin.explorerxln.com/bootstrap/bootstrap-latest.tar.gz"
+TMP_ZIP="$(mktemp -t lunariumcoin-bootstrap.XXXXXX.tar.gz)"
 TMP_EXTRACT="$(mktemp -d -t lunariumcoin-bootstrap-extract.XXXXXX)"
 WALLET_BIN="$SCRIPT_DIR/lunariumcoin-qt"
 
@@ -32,7 +32,7 @@ else
     echo "==========================================================="
     echo "No local blockchain data found."
     echo "Downloading the official bootstrap so you don't have to sync"
-    echo "from scratch (~1.1 GB, from bootstrap.lunariumcoin.com)."
+    echo "from scratch (~1.1 GB)."
     echo
 
     mkdir -p "$DATA_DIR"
@@ -50,7 +50,7 @@ else
 
     if [ "$DOWNLOAD_OK" = "1" ]; then
         echo "Download complete. Extracting..."
-        if unzip -q "$TMP_ZIP" -d "$TMP_EXTRACT"; then
+        if tar -xzf "$TMP_ZIP" -C "$TMP_EXTRACT"; then
             for folder in blocks chainstate sporks; do
                 if [ -d "$TMP_EXTRACT/$folder" ]; then
                     rm -rf "${DATA_DIR:?}/$folder"
