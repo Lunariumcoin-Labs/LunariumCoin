@@ -33,3 +33,8 @@ Masternode reward share is 75% of the block reward (staker share 25%) for all bl
 ---
 
 Masternode collateral is currently **1,000,000 XLN** (in effect since block 621,702).
+
+### Core Team
+
+• Lunarium Coin XLN  
+• Core_XLN
