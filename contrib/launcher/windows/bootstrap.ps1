@@ -8,8 +8,8 @@ $ErrorActionPreference = "Stop"
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
 $DataDir   = Join-Path $env:APPDATA "LunariumCoin"
 $BlocksDir = Join-Path $DataDir "blocks"
-$BootstrapUrl = "https://bootstrap.lunariumcoin.com/blockchain"
-$TempZip   = Join-Path $env:TEMP "lunariumcoin-bootstrap.zip"
+$BootstrapUrl = "https://mundolunariumcoin.explorerxln.com/bootstrap/bootstrap-latest.tar.gz"
+$TempZip   = Join-Path $env:TEMP "lunariumcoin-bootstrap.tar.gz"
 $TempExtract = Join-Path $env:TEMP "lunariumcoin-bootstrap-extract"
 $WalletExe = Join-Path $ScriptDir "lunariumcoin-qt.exe"
 
@@ -27,7 +27,7 @@ if (Has-ExistingBlockchain) {
     Write-Host "==========================================================="
     Write-Host "No local blockchain data found."
     Write-Host "Downloading the official bootstrap so you don't have to sync"
-    Write-Host "from scratch (~1.1 GB, from bootstrap.lunariumcoin.com)."
+    Write-Host "from scratch (~1.1 GB)."
     Write-Host ""
 
     New-Item -ItemType Directory -Force -Path $DataDir | Out-Null
@@ -65,7 +65,9 @@ if (Has-ExistingBlockchain) {
 
         if (Test-Path $TempExtract) { Remove-Item -Recurse -Force $TempExtract }
         New-Item -ItemType Directory -Force -Path $TempExtract | Out-Null
-        Expand-Archive -Path $TempZip -DestinationPath $TempExtract -Force
+        # Windows 10 1803+/11 ships a native bsdtar as tar.exe, handles .tar.gz directly.
+        & tar.exe -xzf $TempZip -C $TempExtract
+        if ($LASTEXITCODE -ne 0) { throw "tar.exe extraction failed with exit code $LASTEXITCODE" }
 
         foreach ($folder in @("blocks", "chainstate", "sporks")) {
             $src = Join-Path $TempExtract $folder
