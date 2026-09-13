@@ -34,6 +34,16 @@ Masternode reward share is 75% of the block reward (staker share 25%) for all bl
 
 Masternode collateral is currently **1,000,000 XLN** (in effect since block 621,702).
 
+### Blockchain Bootstrap
+
+To skip syncing from scratch, download the bootstrap and extract `blocks/`,
+`chainstate/` and `sporks/` into your data directory (`%APPDATA%\LunariumCoin`
+on Windows, `~/.lunariumcoin` on Linux):
+
+[mundolunariumcoin.explorerxln.com/bootstrap/bootstrap-latest.tar.gz](https://mundolunariumcoin.explorerxln.com/bootstrap/bootstrap-latest.tar.gz)
+
+The Windows installer (see [Releases](https://github.com/Lunariumcoin-Labs/LunariumCoin/releases)) can do this automatically during setup.
+
 ### Core Team
 
 • Lunarium Coin XLN  
