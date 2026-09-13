@@ -13,10 +13,6 @@
 #include "clientmodel.h"
 #include "optionsmodel.h"
 #include "utiltime.h"
-#include "util.h"
-#include "masternode.h"
-#include "masternodeconfig.h"
-#include "addresstablemodel.h"
 #include <vector>
 #include <QPainter>	
 #include <QPainter>
@@ -49,24 +45,6 @@ DashboardWidget::DashboardWidget(PIVXGUI* parent) :
     // Containers
     setCssProperty({this, ui->left}, "container");
     ui->left->setContentsMargins(0,0,0,0);
-
-    // Overview cards (Send / Receive / Staking / Masternodes)
-    setCssProperty({ui->cardSend, ui->cardReceive, ui->cardStaking, ui->cardMasternodes}, "container-border-light");
-    setCssProperty({ui->lblCardSendTitle, ui->lblCardReceiveTitle, ui->lblCardStakingTitle, ui->lblCardMnTitle}, "text-list-title1");
-    setCssProperty({ui->editCardSendAddress, ui->editCardSendAmount}, "edit-primary");
-    setCssProperty(ui->btnCardSend, "btn-primary");
-    setCssProperty(ui->btnCardReceiveCopy, "btn-secundary");
-    setCssProperty({ui->lblCardReceiveAddress, ui->lblCardStakingWeight, ui->lblCardStakingState,
-                     ui->lblCardMnCount, ui->lblCardMnCollateral}, "text-list-body1");
-    ui->lblCardReceiveAddress->setTextInteractionFlags(Qt::TextSelectableByMouse);
-
-    connect(ui->btnCardSend, &QPushButton::clicked, this, [this]() {
-        if (window) window->goToSend();
-    });
-    connect(ui->btnCardReceiveCopy, &QPushButton::clicked, this, [this]() {
-        GUIUtil::setClipboard(ui->lblCardReceiveAddress->text());
-        inform(tr("Address copied"));
-    });
 
     // Title
     setCssTitleScreen(ui->labelTitle);
@@ -252,23 +230,6 @@ void DashboardWidget::loadWalletModel()
     }
     // update the display unit, to not use the default ("XLN")
     updateDisplayUnit();
-
-    // Overview cards: receive address preview, staking status, masternodes summary.
-    // Read-only info reusing the same data sources as the top bar / receive screen,
-    // no new transaction logic is involved.
-    if (walletModel) {
-        AddressTableModel* addrModel = walletModel->getAddressTableModel();
-        QString addrToShow = addrModel ? addrModel->getAddressToShow() : QString();
-        ui->lblCardReceiveAddress->setText(addrToShow.isEmpty() ? tr("Open Receive to generate an address") : addrToShow);
-
-        bool fIsStaking = fStakingActive && !walletModel->isWalletLocked();
-        ui->lblCardStakingState->setText(fIsStaking ? tr("Staking active") : tr("Staking inactive"));
-        ui->lblCardStakingWeight->setText(GUIUtil::formatBalance(walletModel->getBalance(), nDisplayUnit) + " " + tr("available"));
-    }
-
-    int nMNConfigured = (int)masternodeConfig.getEntries().size();
-    ui->lblCardMnCount->setText(tr("%1 configured").arg(nMNConfigured));
-    ui->lblCardMnCollateral->setText(GUIUtil::formatBalance(CMasternode::GetMinMasternodeCollateral(), nDisplayUnit) + " " + tr("required"));
 }
 
 void DashboardWidget::onTxArrived(const QString& hash, const bool& isCoinStake)
