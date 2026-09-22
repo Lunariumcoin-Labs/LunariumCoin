@@ -4,6 +4,7 @@ $(package)_version=1.0.1k
 $(package)_download_path=https://github.com/MasterStakeCore/depends/raw/main/
 $(package)_file_name=$(package)-$($(package)_version).tar.gz
 $(package)_sha256_hash=8f9faeaebad088e772f4ef5e38252d472be4d878c6b3a2718c10a4fcebe7a41c
+$(package)_patches=add_darwin_arm64_target.patch
 
 define $(package)_set_vars
 $(package)_config_env=AR="$($(package)_ar)" RANLIB="$($(package)_ranlib)" CC="$($(package)_cc)"
@@ -61,6 +62,7 @@ $(package)_config_opts_s390x_linux=linux-generic64
 $(package)_config_opts_alpha_linux=linux-generic64
 $(package)_config_opts_m68k_linux=linux-generic32
 $(package)_config_opts_x86_64_darwin=darwin64-x86_64-cc
+$(package)_config_opts_aarch64_darwin=darwin64-arm64-cc
 $(package)_config_opts_x86_64_mingw32=mingw64
 $(package)_config_opts_i686_mingw32=mingw
 endef
@@ -68,7 +70,8 @@ endef
 define $(package)_preprocess_cmds
   sed -i.old "/define DATE/d" util/mkbuildinf.pl && \
   sed -i.old "s|engines apps test|engines|" Makefile.org && \
-  sed -i.old '193s/.*/#if defined(linux)/;194s/.*/# define TERMIOS/;195s/.*/# undef  TERMIO/' crypto/ui/ui_openssl.c
+  sed -i.old '193s/.*/#if defined(linux)/;194s/.*/# define TERMIOS/;195s/.*/# undef  TERMIO/' crypto/ui/ui_openssl.c && \
+  patch -p1 -i $($(package)_patch_dir)/add_darwin_arm64_target.patch
 endef
 
 define $(package)_config_cmds
