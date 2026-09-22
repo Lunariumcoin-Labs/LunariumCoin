@@ -68,7 +68,7 @@ endef
 define $(package)_preprocess_cmds
   sed -i.old "/define DATE/d" util/mkbuildinf.pl && \
   sed -i.old "s|engines apps test|engines|" Makefile.org && \
-  sed -i '193s/.*/#if defined(linux)/;194s/.*/# define TERMIOS/;195s/.*/# undef  TERMIO/' crypto/ui/ui_openssl.c
+  sed -i.old '193s/.*/#if defined(linux)/;194s/.*/# define TERMIOS/;195s/.*/# undef  TERMIO/' crypto/ui/ui_openssl.c
 endef
 
 define $(package)_config_cmds
