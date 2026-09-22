@@ -1,0 +1,22 @@
+--- old/tools/build/src/tools/darwin.jam	2026-09-22 08:49:00.701301500 -0300
++++ new/tools/build/src/tools/darwin.jam	2026-09-22 08:49:09.165803100 -0300
+@@ -136,7 +136,18 @@
+     
+     # - Set the toolset generic common options.
+     common.handle-options darwin : $(condition) : $(command) : $(options) ;
+-    
++
++    # - Force a consistent macOS deployment target on every darwin.compile/darwin.link action.
++    #   <cxxflags>/<linkflags> passed through our own user-config.jam "using darwin : : ... : ..."
++    #   line (see depends/packages/boost.mk) do NOT reliably reach the real compiler invocation here —
++    #   verified live: the actual `"g++" ...` command b2 runs has no -mmacosx-version-min at all, so
++    #   clang falls back to the SDK's own default (14.0 on the Xcode 15.4 SDK) while the rest of the
++    #   build (OpenSSL, the core binary itself) explicitly targets 11.0 — an ABI mismatch across object
++    #   files that produced a SIGBUS crash at daemon startup, not a build failure. Keep this in sync
++    #   with OSX_MIN_VERSION in depends/hosts/darwin.mk.
++    flags darwin.compile OPTIONS $(condition) : -mmacosx-version-min=11.0 ;
++    flags darwin.link OPTIONS $(condition) : -mmacosx-version-min=11.0 ;
++
+     # - GCC 4.0 and higher in Darwin does not have -fcoalesce-templates. Removed outright: real-world
+     #   compilers passed to this toolset are always a modern clang (which rejects this flag outright,
+     #   "unknown argument"), and Apple clang's `-dumpversion` reports a fixed legacy "4.2.1"
