@@ -1,16 +1,20 @@
---- old/tools/build/src/tools/darwin.jam	2026-09-22 02:00:46.054408000 -0300
-+++ new/tools/build/src/tools/darwin.jam	2026-09-22 02:00:53.651199500 -0300
-@@ -137,8 +137,11 @@
+--- old/tools/build/src/tools/darwin.jam	2026-09-22 02:05:29.577418800 -0300
++++ new/tools/build/src/tools/darwin.jam	2026-09-22 02:05:35.414710800 -0300
+@@ -137,11 +137,12 @@
      # - Set the toolset generic common options.
      common.handle-options darwin : $(condition) : $(command) : $(options) ;
      
 -    # - GCC 4.0 and higher in Darwin does not have -fcoalesce-templates.
 -    if $(real-version) < "4.0.0"
-+    # - GCC 4.0 and higher in Darwin does not have -fcoalesce-templates. Unconditionally disabled here:
-+    #   real-world compilers passed to this toolset are always a modern clang (which never wants this
-+    #   flag), and Apple clang's `-dumpversion` reports a fixed legacy "4.2.1" compatibility string
-+    #   regardless of the actual clang version, which defeats this rule's version check entirely.
-+    if 0
+-    {
+-        flags darwin.compile.c++ OPTIONS $(condition) : -fcoalesce-templates ;
+-    }
++    # - GCC 4.0 and higher in Darwin does not have -fcoalesce-templates. Removed outright: real-world
++    #   compilers passed to this toolset are always a modern clang (which rejects this flag outright,
++    #   "unknown argument"), and Apple clang's `-dumpversion` reports a fixed legacy "4.2.1"
++    #   compatibility string regardless of the actual clang version, defeating the version check that
++    #   used to guard this (note: `if 0` is NOT a safe way to disable this — Jam has no falsy literal,
++    #   any non-empty word, "0" included, is truthy, so that would still run the block unconditionally).
+     # - GCC 4.2 and higher in Darwin does not have -Wno-long-double.
+     if $(real-version) < "4.2.0"
      {
-         flags darwin.compile.c++ OPTIONS $(condition) : -fcoalesce-templates ;
-     }
