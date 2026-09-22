@@ -930,8 +930,14 @@ AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
  [ AC_MSG_RESULT(no); HAVE_STRONG_GETAUXVAL=0 ]
 )
 
+dnl AC_LINK_IFELSE, not AC_COMPILE_IFELSE: declaring an extern weak symbol and calling it is valid C
+dnl on every compiler, so a compile-only check always says "yes" regardless of whether the linker can
+dnl actually leave it unresolved. Linux's ELF linker tolerates a weak symbol with no definition
+dnl anywhere in the link closure (resolves to NULL); Apple's linker does not for a static executable
+dnl like ours, and hard-fails with "Undefined symbols ... _getauxval" (verified live building arm64
+dnl on macOS) — only an actual link attempt catches that difference.
 AC_MSG_CHECKING(for weak getauxval support in the compiler)
-AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[
     unsigned long getauxval(unsigned long type) __attribute__((weak));
     #define AT_HWCAP 16
   ]], [[
