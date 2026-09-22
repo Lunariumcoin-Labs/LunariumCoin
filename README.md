@@ -1,6 +1,8 @@
 LunariumCoin wallet repository 
 =====================================
 
+Windows — recommended: use the installer (see [Releases](https://github.com/Lunariumcoin-Labs/LunariumCoin/releases)).
+
 ### Coin Specs
 
 • PoW Algorithm: Scrypt  
