@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/logo.png" width="140" alt="LunariumCoin logo"/></p>
+
 LunariumCoin wallet repository 
 =====================================
 
