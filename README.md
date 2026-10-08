@@ -48,6 +48,12 @@ on Windows, `~/.lunariumcoin` on Linux):
 
 The Windows installer (see [Releases](https://github.com/Lunariumcoin-Labs/LunariumCoin/releases)) can do this automatically during setup.
 
+### Media Coverage
+
+Third-party coverage of Lunarium Coin. Entries marked *sponsored* are paid placements.
+
+- Chainquiry (sponsored): [Project listing](https://chainquiry.com/projects/lunarium-coin/) · [Research article](https://chainquiry.com/insights/what-is-lunarium-coin/) · [Medium feature](https://medium.com/@chainquiry/lunarium-coin-xln-why-this-2018-blockchain-is-still-building-a2abc3f4c120)
+
 ### Core Team
 
 • Lunarium Coin XLN  
