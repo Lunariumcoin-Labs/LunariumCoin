@@ -198,7 +198,10 @@ public:
         // P2SH prefix unchanged from legacy (78); only P2PKH display switches to 'L'.
 
         // Optional one-block mint for migration/exchange (same pubkey as an 'L' address you import in a wallet):
-        consensus.nXLNCoinSupplyMintHeight = 1270000;
+        // The 47M supply mint happened at block 1,275,000 on mainnet (block c1897e2bc4f8faaf9f0f1f945ec7c5372596a622092a235bed8e97f3aef79eff, coinstake bc9e2224...5ffe6e pays
+        // 47,000,000 XLN to sXLNCoinSupplyMintAddress) and the network accepted it. With 1,270,000 a node built from this
+        // source rejects that block (bad-cb-amount) and forks off; 1,275,000 matches the chain the network actually runs.
+        consensus.nXLNCoinSupplyMintHeight = 1275000;
         consensus.nXLNCoinSupply = 47000000 * COIN;
         consensus.sXLNCoinSupplyMintAddress = "LRdqugAgypEzDVyp1cJ86bwDrNW12BDefT";  // DecodeDestination accepts L before the display fork height.
 
