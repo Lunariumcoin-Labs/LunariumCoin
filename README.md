@@ -1,5 +1,11 @@
 <p align="center"><img src="assets/logo.png" width="140" alt="LunariumCoin logo"/></p>
 
+<p align="center">
+  <a href="https://galaxia.lunariumcoin.com/?coin=xln"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgalaxia.lunariumcoin.com%2Fapi%2Fv1%2Fcoins%2Fxln&query=%24.data.market_cap_usd&prefix=%24&label=market%20cap&color=1f6feb&cacheSeconds=1800" alt="XLN market cap (live)"/></a>
+  <a href="https://galaxia.lunariumcoin.com/?coin=xln"><img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fgalaxia.lunariumcoin.com%2Fapi%2Fv1%2Fcoins%2Fxln&query=%24.data.price_usd&prefix=%24&label=price&color=1f6feb&cacheSeconds=1800" alt="XLN price (live)"/></a>
+  <br/><sub>Live data from the <a href="https://galaxia.lunariumcoin.com/?coin=xln">GaláxiaLunarium</a> aggregator</sub>
+</p>
+
 LunariumCoin wallet repository 
 =====================================
 
