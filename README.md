@@ -64,3 +64,7 @@ Third-party coverage of Lunarium Coin. Entries marked *sponsored* are paid place
 
 • Lunarium Coin XLN  
 • Core_XLN
+
+### License
+
+LunariumCoin Core is released under the [MIT license](COPYING), like the Bitcoin, Dash and PIVX code it builds on.
