@@ -19,7 +19,7 @@ Windows — recommended: use the installer (see [Releases](https://github.com/Lu
 • PoS Blocks: Starting from 251  
 • Block Time: 60 Seconds    
 • Maturity: 100 Confirmations  
-• Prefix: XLN addresses start with the capital letter "A"   
+• Prefix: XLN addresses start with the capital letter "L" (before block 1,280,000 the same addresses were shown starting with "X")   
 • Ports: 13990 (p2p) / 13980 (rpc)    
 • Explorer [explorerxln.com](https://explorerxln.com/)
 • Website [lunariumcoin.com](https://lunariumcoin.com/)
